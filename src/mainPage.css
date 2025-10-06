@@ -1,0 +1,138 @@
+.booking-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.service-section {
+  flex: 2;
+}
+
+.summary-box {
+  flex: 1;
+  background-color: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  margin-top: 95px;
+  transition: 0.3s ease;
+}
+.summary-box:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.summary-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.summary-location {
+  font-size: 13px;
+  color: #777;
+}
+
+.summary-content {
+  font-size: 14px;
+  color: #555;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.salons-container {
+  text-align: center;
+  padding: 30px;
+}
+
+.salon-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.salon-card {
+  background-color: transparent 0.4;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.3s ease;
+  max-width: 200px;
+  border: solid rgb(37, 37, 37, 0.2) 1px;
+}
+
+.salon-card:hover {
+  transform: scale(1.05);
+}
+
+.salon-logo {
+  width: 200px;
+  height: auto;
+}
+.service-card {
+  background-color: #0e0e0e 0.3;
+  border: solid rgb(21, 21, 21, 0.3) 1px;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+  width: 500px;
+}
+.service-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.service-section {
+  display: flex;
+  flex-direction: column;
+}
+.service-title {
+  padding-left: 50px;
+}
+.book-button {
+  padding: 6px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(164, 162, 162);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #3d48c8;
+}
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.summary-box {
+  background-color: rgba(222, 222, 222, 0.3);
+  width: 300px;
+  height: fit-content;
+}
+.service-name,
+.service-price {
+  font-weight: bold;
+  color: #000000;
+  font-size: 18px;
+}

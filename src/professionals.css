@@ -1,0 +1,53 @@
+.professionals-container {
+  padding: 20px;
+}
+
+.professionals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.professional-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px;
+}
+
+.professional-card:hover {
+  transform: translateY(-5px);
+}
+
+.professional-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.professional-card h3 {
+  margin: 10px 0 5px;
+}
+
+.professional-card p {
+  margin: 0;
+}
+
+.professional-role {
+  font-style: italic;
+}
+
+.professional-salon {
+  margin-top: 5px;
+  color: #555;
+}

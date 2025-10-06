@@ -1,0 +1,60 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  padding-top: 10px;
+  background-color: rgba(240, 240, 225, 0.5);
+  border-radius: 10px;
+}
+.login-input {
+  width: 250px;
+  height: 25px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+}
+.login-button {
+  width: 250px;
+  height: 30px;
+  margin-bottom: 20px;
+  background-color: rgb(39, 39, 248);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.login-button:hover {
+  background-color: darkblue;
+}
+.google-login-button {
+  font-size: 15px;
+  width: 250px;
+  height: 30px;
+  margin-bottom: 20px;
+  background-color: rgb(39, 39, 248);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.google-login-button:hover {
+  background-color: darkblue;
+}
+
+.changeToLoginBtn:hover {
+  cursor: pointer;
+}
+.changeToLoginBtn {
+  color: blue;
+  text-decoration: underline;
+  font-size: 15px;
+  margin-top: 10px;
+  font-weight: bold;
+}
