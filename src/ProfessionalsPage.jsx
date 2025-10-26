@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useBooking } from "./BookingContext.jsx";
 import { apiFetch } from "./lib/api";
 import "./professionals.css";
+import Navbar from "./Navbar.jsx";
 
 export default function ProfessionalsPage() {
   const { salonId } = useParams();
@@ -72,6 +73,7 @@ export default function ProfessionalsPage() {
 
   return (
     <div className="professionals-container">
+      <Navbar />
       <h2>Usluge: {selectedServices.map((s) => s.name).join(", ")}</h2>
 
       <div style={{ margin: "16px 0" }}>
@@ -99,7 +101,7 @@ export default function ProfessionalsPage() {
       </div>
 
       <button
-        className="book-button"
+        className="professionals-book-button"
         disabled={loading}
         onClick={submitBooking}
       >

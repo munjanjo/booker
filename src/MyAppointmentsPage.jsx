@@ -2,12 +2,14 @@ import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "./lib/api";
 import "./my-appointments.css";
+import Navbar from "./Navbar";
 
 export default function MyAppointmentsPage() {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
+  const [cancelingIds, setCancelingIds] = useState(() => new Set());
 
   const dtf = useMemo(
     () =>
@@ -50,28 +52,45 @@ export default function MyAppointmentsPage() {
     };
   }, []);
 
-  async function cancelAppointment(id) {
-    if (!id) return alert("Nedostaje ID termina.");
-    if (!window.confirm("Jesi li siguran da želiš otkazati ovaj termin?"))
+  const goToBooking = () => navigate("/main");
+
+  // 👉 Otkazivanje termina
+  const setCanceling = (id, on) => {
+    setCancelingIds((prev) => {
+      const next = new Set(prev);
+      if (on) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  };
+
+  const handleCancel = async (a) => {
+    const id = a?.id;
+    if (id == null) {
+      alert("Nije moguće otkazati ovaj termin jer nedostaje ID.");
       return;
+    }
+    if (!window.confirm("Želiš li sigurno otkazati ovaj termin?")) return;
 
     try {
+      setCanceling(id, true);
+
+      // Pozovi backend otkazivanja
       await apiFetch(`/api/appointments/${id}/cancel`, {
         method: "POST",
         auth: true,
       });
 
-      // Lokalno osvježi status
+      // Optimistički ažuriraj UI (status -> Cancelled)
       setAppointments((prev) =>
-        prev.map((a) => (a.id === id ? { ...a, status: "Cancelled" } : a))
+        prev.map((x) => (x.id === id ? { ...x, status: "Cancelled" } : x))
       );
-      alert("Termin uspješno otkazan.");
     } catch (e) {
-      alert("Greška: " + (e.message ?? "Neuspješno otkazivanje."));
+      setErr(e.message ?? "Neuspješno otkazivanje termina.");
+    } finally {
+      setCanceling(id, false);
     }
-  }
-
-  const goToBooking = () => navigate("/main");
+  };
 
   if (loading) {
     return (
@@ -89,6 +108,7 @@ export default function MyAppointmentsPage() {
   if (err) {
     return (
       <div className="myapp-page">
+        <Navbar />
         <h2>Moje rezervacije</h2>
         <div className="error-box">
           <p>{err}</p>
@@ -116,6 +136,7 @@ export default function MyAppointmentsPage() {
 
   return (
     <div className="myapp-page">
+      <Navbar />
       <h2>Moje rezervacije</h2>
 
       <div className="cards">
@@ -123,6 +144,9 @@ export default function MyAppointmentsPage() {
           const start = a.startUtc ? new Date(a.startUtc) : null;
           const end = a.endUtc ? new Date(a.endUtc) : null;
           const status = (a.status ?? "Booked").toLowerCase();
+
+          const canCancel = status !== "cancelled" && status !== "completed";
+          const busy = a.id != null && cancelingIds.has(a.id);
 
           return (
             <article
@@ -180,12 +204,15 @@ export default function MyAppointmentsPage() {
                 <button className="btn ghost" onClick={goToBooking}>
                   Novi termin
                 </button>
-                {status === "booked" && (
+
+                {canCancel && (
                   <button
                     className="btn danger"
-                    onClick={() => cancelAppointment(a.id)}
+                    disabled={busy}
+                    onClick={() => handleCancel(a)}
+                    title="Otkaži ovaj termin"
                   >
-                    Otkaži
+                    {busy ? "Otkazujem..." : "Otkaži"}
                   </button>
                 )}
               </footer>

@@ -23,10 +23,13 @@ public class AppointmentsController(AppDbContext db) : ControllerBase
         var start = req.StartUtc;
         var end = start.AddMinutes(service.DurationMinutes);
 
+        // Robusnije preklapanje: (start < a.End) && (end > a.Start)
         var overlap = await db.Appointments.AnyAsync(a =>
             a.ServiceId == req.ServiceId &&
             a.Status == "Booked" &&
-            ((start >= a.StartUtc && start < a.EndUtc) || (end > a.StartUtc && end <= a.EndUtc)));
+            start < a.EndUtc &&
+            end > a.StartUtc
+        );
 
         if (overlap) return Conflict("Time slot not available");
 
@@ -35,14 +38,14 @@ public class AppointmentsController(AppDbContext db) : ControllerBase
             FirebaseUid = uid,
             ServiceId = req.ServiceId,
             StartUtc = start,
-            EndUtc = end
+            EndUtc = end,
+            Status = "Booked" // ✅ inicijalni status
         };
 
         db.Appointments.Add(appt);
         await db.SaveChangesAsync();
         return Ok(appt);
     }
-    
 
     [Authorize]
     [HttpGet("mine")]
@@ -54,7 +57,46 @@ public class AppointmentsController(AppDbContext db) : ControllerBase
             .Where(a => a.FirebaseUid == uid)
             .OrderByDescending(a => a.StartUtc)
             .ToListAsync();
+
         return Ok(list);
+    }
+
+    // ✅ OVDJE treba stajati Cancel — UNUTAR klase
+    [Authorize]
+    [HttpPost("{id:int}/cancel")]
+    public async Task<IActionResult> Cancel(int id)
+    {
+        var uid = User.FindFirst("user_id")?.Value;
+        if (uid is null) return Unauthorized();
+
+        var appt = await db.Appointments
+            .Include(a => a.Service)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (appt is null) return NotFound("Appointment not found");
+        if (appt.FirebaseUid != uid) return Forbid();
+
+        if (string.Equals(appt.Status, "Cancelled", StringComparison.OrdinalIgnoreCase))
+            return Conflict("Already cancelled");
+
+        if (string.Equals(appt.Status, "Completed", StringComparison.OrdinalIgnoreCase))
+            return Conflict("Already completed");
+
+        // Po želji: zabrani otkazivanje nakon početka
+        if (DateTime.UtcNow >= appt.StartUtc)
+            return BadRequest("Cannot cancel after start time");
+
+        appt.Status = "Cancelled";
+        await db.SaveChangesAsync();
+
+        return Ok(new
+        {
+            appt.Id,
+            appt.Status,
+            appt.StartUtc,
+            appt.EndUtc,
+            ServiceName = appt.Service?.Name
+        });
     }
 }
 
