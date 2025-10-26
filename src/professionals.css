@@ -1,53 +1,86 @@
 .professionals-container {
-  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px 50px;
+  background-color: transparent;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  text-align: justify;
+  border: solid black 1px;
 }
 
-.professionals-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.professional-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 15px;
+.professionals-container h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #222;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-  cursor: pointer;
+  font-weight: 600;
+}
 
+.professionals-container h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #444;
+  font-weight: 500;
+}
+
+.professionals-container label {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 350px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.professional-card:hover {
-  transform: translateY(-5px);
+.professionals-container label:hover {
+  background-color: #f2f2f2;
 }
 
-.professional-card img {
+.professionals-container input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #007bff;
+}
+
+.professionals-container input[type="datetime-local"] {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.professionals-container input[type="datetime-local"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+.book-button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
   border-radius: 10px;
+  padding: 12px 0;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease-in-out;
 }
 
-.professional-card h3 {
-  margin: 10px 0 5px;
+.book-button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
-.professional-card p {
-  margin: 0;
-}
-
-.professional-role {
-  font-style: italic;
-}
-
-.professional-salon {
-  margin-top: 5px;
-  color: #555;
+.book-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }

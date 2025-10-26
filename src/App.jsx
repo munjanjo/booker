@@ -5,6 +5,8 @@ import LoginPage from "./loginPage";
 import MainPage from "./mainPage";
 import SalonPage from "./SalonPage";
 import ProfessionalsPage from "./ProfessionalsPage";
+import DebugToken from "./DebugToken.jsx";
+import MyAppointmentsPage from "./MyAppointmentsPage.jsx";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Route path="/main" element={<MainPage />} />
       <Route path="/salon/:salonId" element={<SalonPage />} />
       <Route path="/professionals/:salonId" element={<ProfessionalsPage />} />
+      <Route path="/debug/token" element={<DebugToken />} />
+      <Route path="/my-appointments" element={<MyAppointmentsPage />} />
     </Routes>
   );
 }

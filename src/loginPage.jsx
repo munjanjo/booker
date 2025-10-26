@@ -27,7 +27,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await signInWithPopup(auth, googleProvider);
-      console.log("User created successfully");
+      console.log("Login successful");
       localStorage.setItem("email", email);
       navigate("/");
     } catch (error) {

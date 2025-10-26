@@ -42,6 +42,16 @@ export default function Navbar() {
             Login
           </p>
         )}
+        {user ? (
+          <p
+            className="navbar-title"
+            onClick={() => navigate("/my-appointments")}
+          >
+            My Appointments
+          </p>
+        ) : (
+          ""
+        )}
         <p className="navbar-title" onClick={handleLogoutClick}>
           Logout
         </p>

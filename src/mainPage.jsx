@@ -5,7 +5,6 @@ import Navbar from "./Navbar.jsx";
 
 export default function MainPage() {
   const navigate = useNavigate();
-
   return (
     <>
       <Navbar />
@@ -26,4 +25,3 @@ export default function MainPage() {
     </>
   );
 }
-

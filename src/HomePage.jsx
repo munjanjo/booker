@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function homePage() {
+export default function HomePage() {
   const fullText = "Why call? Just click.";
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
@@ -19,6 +19,7 @@ export default function homePage() {
       return () => clearTimeout(timeout);
     }
   }, [index, fullText]);
+
   return (
     <>
       <title>Booker</title>
